@@ -79,7 +79,7 @@ $_SESSION['onpage'] = 'home';
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                  <select class="form-control" id="usertype">
+                  <select class="form-control" id="usertype" name="usertype">
                     <option>Admin</option>
                     <option>User</option>
                   </select>
@@ -89,7 +89,7 @@ $_SESSION['onpage'] = 'home';
 
             <div class="form-group ">
 
-              <input type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button" name="Submit"/>
+              <input type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button" name="Submited"/>
             </div>
             
           </form>
@@ -97,7 +97,6 @@ $_SESSION['onpage'] = 'home';
       </div>
     </div>
     </div>
-  </div>
   
     <!-- SCRIPTS -->
     <!-- JQuery -->
@@ -107,8 +106,37 @@ $_SESSION['onpage'] = 'home';
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-    
-
 </body>
 </html>
+<?php
+if (isset($_POST['Submited'])){
+  $uname1=$_POST['username'];
+  $pass1=$_POST['password'];
+  $name1=$_POST['name'];
+  $email1=$_POST['email'];
+  $usertype1=$_POST['usertype'];
+  debug_to_console("Result started");
+  $mysqli = mysqli_connect("localhost","root","","musicallydb");
+  $sql="insert into users(username,password,name,email,user_type) values('".$uname1."','".$pass1."','".$name1."','".$email1."','".$usertype1."')";
+
+  $result = mysqli_query($mysqli,$sql);
+  if ( false===$result ) {
+    debug_to_console( mysqli_error($mysqli));
+  }
+  else {
+    debug_to_console('done.');
+  }
+  $_SESSION['usertype'] = $_POST['usertype'];
+
+  debug_to_console("Executed..");
+  
+}
+function debug_to_console( $data ) {
+  $output = $data;
+  if ( is_array( $output ) )
+      $output = implode( ',', $output);
+
+  echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+?>
 

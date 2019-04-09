@@ -3,49 +3,49 @@ session_start();
 if(empty($_SESSION['isLoggedIn']))
   $_SESSION['isLoggedIn'] = false;
 $_SESSION['onpage'] = 'home';
-
-
 ?>
 <?php
+$mysqli = mysqli_connect("localhost","root","","musicallydb");
+debug_to_console("Start");
+if(isset($_POST['Submited'])){
 
-function debug_to_console( $data ) {
-  $output = $data;
-  if ( is_array( $output ) )
-      $output = implode( ',', $output);
+  echo "messagePOST: ".$_POST['username']."<br /><br />";
+  echo "chapcha_codePOST: ".$_POST['password']."<br /><br />";
+  //echo "titlePOST: ".$_POST['title']."<br /><br />";
+  debug_to_console("in");
 
-  echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
-}
-
-
-debug_to_console("in home");
-$mysqli = mysqli_connect("localhost","root","mysql","musicallydb");
-
-if (!empty($_POST['name']) ) {
-  
   $uname1=$_POST['username'];
   $pass1=$_POST['password'];
   $name1=$_POST['name'];
   $email1=$_POST['email'];
   $usertype1=$_POST['usertype'];
   debug_to_console("Result started");
-  $sql="insert into users(username,password,name,email,usertype) values('".$uname1."','".$pass1."','".$name1."','".$email1."','".$usertype1."')";
+  $sql="insert into users(username,password,name,email,user_type) values('".$uname1."','".$pass1."','".$name1."','".$email1."','".$usertype1."')";
 
-  mysqli_query($mysqli,$sql);
+  $result = mysqli_query($mysqli,$sql);
+  if ( false===$result ) {
+    debug_to_console( mysqli_error($mysqli));
+  }
+  else {
+    debug_to_console('done.');
+  }
 
   debug_to_console("Query executed");
     $_SESSION['isLoggedIn'] = true;
     $_SESSION['user'] = $_POST['name'];
     header('Location: '.$_SERVER['REQUEST_URI']);
 
-  
 }
+
+debug_to_console("1");
+
 if (!empty($_POST['username']) 
                && !empty($_POST['password'])) {
   
   $_SESSION['user']=$_POST['username'];
   $_SESSION['pass']=$_POST['password'];
 
-
+  debug_to_console("in usercred");
   $sql="select * from users where username='".$_SESSION['user']."' and password='".$_SESSION['pass']."'  ";
 
   $result=mysqli_query($mysqli,$sql);
@@ -60,8 +60,43 @@ if (!empty($_POST['username'])
     echo "You have entered wrong credentials";
 
   }
+  debug_to_console("2");
 }
 
+debug_to_console("3");
+if (!empty($_POST['name']) ) {
+  
+  $uname1=$_POST['username'];
+  $pass1=$_POST['password'];
+  $name1=$_POST['name'];
+  $email1=$_POST['email'];
+  $usertype1=$_POST['usertype'];
+  debug_to_console("Result started");
+  $sql="insert into users(username,password,name,email,user_type) values('".$uname1."','".$pass1."','".$name1."','".$email1."','".$usertype1."')";
+
+  $result = mysqli_query($mysqli,$sql);
+  if ( false===$result ) {
+    debug_to_console( mysqli_error($mysqli));
+  }
+  else {
+    debug_to_console('done.');
+  }
+
+  debug_to_console("Query executed");
+    $_SESSION['isLoggedIn'] = true;
+    $_SESSION['user'] = $_POST['name'];
+    header('Location: '.$_SERVER['REQUEST_URI']);
+
+    debug_to_console("4");
+}
+function debug_to_console( $data ) {
+  $output = $data;
+  if ( is_array( $output ) )
+      $output = implode( ',', $output);
+
+  echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+debug_to_console("5");
 /* 
 $yep=mt_rand(1,8);
 
@@ -109,14 +144,11 @@ $image2="css/images/".array_search(strtolower($values1[3]),array_map('strtolower
     <link rel="icon" href="css/images/ipl-logo1.jpg">
 </head>
 <body>
-
+<?php include 'mynavigation.php';?>
    
-  <!-- always include one </div> elements before </body> -->
-    <?php include 'mynavigation.php';?>
 
         
           
-Login
   
     <!-- SCRIPTS -->
     <!-- JQuery -->

@@ -43,7 +43,7 @@ session_start();
 
 			<div class="col-md-4 col-sm-4 col-xs-12">
 				
-				<form method="post" class="form-container" action = "home.php" autocomplete="off">
+				<form method="post" class="form-container" action = "" autocomplete="off">
 				<!-- <form class = "form-signin" role = "form" 
             action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); 
             ?>" method = "post"> -->
@@ -94,3 +94,37 @@ session_start();
 </body>
 
 </html>
+<?php
+if (isset($_POST['Login'])){
+  $uname1=$_POST['username'];
+
+  $pass1=$_POST['password'];
+  $mysqli = mysqli_connect("localhost","root","","musicallydb");
+  $sql="select * from users where username='".$uname1."' and password='".$pass1."'  ";
+
+  $result=mysqli_query($mysqli,$sql);
+
+  if($row=mysqli_fetch_array($result,MYSQLI_NUM)){
+	debug_to_console($row);
+    $_SESSION['isLoggedIn'] = true;
+	$_SESSION['user'] = $row[3];
+	$_SESSION['usertype'] = $row[5];
+    header('Location: '.$_SERVER['REQUEST_URI']);
+
+  }
+  else{
+    echo "You have entered wrong credentials";
+
+  }
+
+  debug_to_console("Executed..");
+  
+}
+function debug_to_console( $data ) {
+  $output = $data;
+  if ( is_array( $output ) )
+      $output = implode( ',', $output);
+
+  echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+?>
