@@ -1,3 +1,16 @@
+<?php
+if (empty($_SESSION['usertype']))
+  $_SESSION['usertype'] = "Login";
+if (isset($_SESSION['user']) && isset($_SESSION['pass'])  ){
+  $mysqli = mysqli_connect("localhost","root","","musicallydb");
+  $sql="select * from users where username='".$_SESSION['user']."' and password='".$_SESSION['pass']."'  ";
+  $result=mysqli_query($mysqli,$sql);
+  if($row=mysqli_fetch_array($result,MYSQLI_NUM)){
+    $_SESSION['isLoggedIn'] = true;
+    $_SESSION['usertype'] = $row[5];
+  }
+}
+?>
  <!-- This is Top and right navigation bar. Edit only links -->
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-header">
@@ -36,6 +49,7 @@
       <div class="menu12">
           <h3>Menu</h3>
       </div>
+      <?php if($_SESSION['usertype'] == "User") { ?>
           <ul id="user" class="nav nav-sidebar" >
             <li <?php if($_SESSION['onpage'] == 'home'){?> class="active" <?php } ?> ><a href="home.php">Home</a></li>
             <li <?php if($_SESSION['onpage'] == 'playmusic'){?> class="active" <?php } ?> ><a href="playmusic.php">Play Music</a></li>
@@ -44,13 +58,16 @@
             <li <?php if($_SESSION['onpage'] == 'sendrequest'){?> class="active" <?php } ?> ><a href="sendrequest.php">Send Request</a></li>
             <li <?php if($_SESSION['onpage'] == 'acceptrequest'){?> class="active" <?php } ?> ><a href="acceptrequest">Accept Request</a></li>
           </ul>
+          <?php } else if($_SESSION['usertype'] == "Admin") {?>
           <ul id="admin" class="nav nav-sidebar" >
             <li <?php if($_SESSION['onpage'] == 'home'){?> class="active" <?php } ?> ><a href="home.php">Home</a></li>
             <li <?php if($_SESSION['onpage'] == 'deleteuser'){?> class="active" <?php } ?> ><a href="deleteuser.php">Delete User</a></li>
             <li <?php if($_SESSION['onpage'] == 'authenticateuser'){?> class="active" <?php } ?> ><a href="authenticateuser.php">Authenticate User</a></li>
           </ul>
+          <?php } else {?>
+            <ul id="admin" class="nav nav-sidebar" >
+            <li <?php if($_SESSION['onpage'] == 'home'){?> class="active" <?php } ?> ><a href="home.php">Home</a></li>
+          </ul>
+          <?php } ?>  
     </div>
-  
-
-
     <!-- End of Navigation bars -->

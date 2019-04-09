@@ -42,25 +42,42 @@ session_start();
 	
 	<!-- always include one </div> elements before </body> -->
     <?php include 'mynavigation.php';?>
-    		<div id='content' class="col-md-10 main">
+    	<div id='content' class="col-md-10 main">
 
 			<div class="col-md-4 col-sm-4 col-xs-12">
 			</div>
 
 			<div class="col-md-4 col-sm-4 col-xs-12">
-        <div id="add">  
-          <form id="upload">
-              <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                      <label class="file-upload btn btn-primary">
-                          Browse for file ... <input type="file" id="file" />
-                      </label>
-                  </div>
-              </div>
-          </form>
-          <button id = "add_btn" onClick="addMusic()">Add Music</button>
-        </div>
-			</div>
+                <div id="add">  
+                    <form id="upload" action="upload.php" method="post" enctype="multipart/form-data">
+                        
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Song Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Browse Song</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                    <center>
+                                    <input type="file" id="file" name="file" />
+                                    </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                    </form>
+                    <button type="submit" name="add_btn" id="add_btn" >Add Music</button>
+                </div>
+
+            </div>
 
 			<div class="col-md-4 col-sm-4 col-xs-12">
 			</div>
@@ -78,3 +95,22 @@ session_start();
 </body>
 
 </html>
+<?php
+if(isset($_POST['add_btn']))
+{    
+     
+ $file = rand(1000,100000)."-".$_FILES['file']['name'];
+ $file_loc = $_FILES['file']['tmp_name'];
+ $file_size = $_FILES['file']['size'];
+ $file_type = $_FILES['file']['type'];
+ $name = $_SESSION['userid'];
+ $ownerid = 
+ $folder="uploads/";
+ 
+ move_uploaded_file($file_loc,$folder.$file);
+ $mysqli = mysqli_connect("localhost","root","","musicallydb");
+
+ $sql="INSERT INTO musics(file,filetype,filesize) VALUES('$file','$file_type','$file_size')";
+ mysql_query($sql); 
+}
+?>

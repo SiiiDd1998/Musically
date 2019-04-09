@@ -108,7 +108,9 @@ if (isset($_POST['Login'])){
 	debug_to_console($row);
     $_SESSION['isLoggedIn'] = true;
 	$_SESSION['user'] = $row[3];
+	$_SESSION['pass'] = $row[4];
 	$_SESSION['usertype'] = $row[5];
+	$_SESSION['userid'] = $row[0];
     header('Location: '.$_SERVER['REQUEST_URI']);
 
   }
