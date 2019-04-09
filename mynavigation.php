@@ -36,13 +36,18 @@
       <div class="menu12">
           <h3>Menu</h3>
       </div>
-          <ul class="nav nav-sidebar ">
+          <ul id="user" class="nav nav-sidebar" >
             <li <?php if($_SESSION['onpage'] == 'home'){?> class="active" <?php } ?> ><a href="home.php">Home</a></li>
-            <li <?php if($_SESSION['onpage'] == 'leaguetable'){?> class="active" <?php } ?> ><a href="leaguetable.php">Points Table</a></li>
-            <li <?php if($_SESSION['onpage'] == 'schedule'){?> class="active" <?php } ?> ><a href="schedule.php">Schedule</a></li>
-            <li <?php if($_SESSION['onpage'] == 'players'){?> class="active" <?php } ?> ><a href="stats.php">Player Stats</a></li>
-            <li <?php if($_SESSION['onpage'] == 'teams'){?> class="active" <?php } ?> ><a href="teams.php">Teams</a></li>
-            <li <?php if($_SESSION['onpage'] == 'aboutus'){?> class="active" <?php } ?> ><a href="aboutus.php">About Us</a></li>
+            <li <?php if($_SESSION['onpage'] == 'playmusic'){?> class="active" <?php } ?> ><a href="playmusic.php">Play Music</a></li>
+            <li <?php if($_SESSION['onpage'] == 'addmusic'){?> class="active" <?php } ?> ><a href="addmusic.php">Add Music</a></li>
+            <li <?php if($_SESSION['onpage'] == 'sharemusic'){?> class="active" <?php } ?> ><a href="sharemusic.php">Share Music</a></li>
+            <li <?php if($_SESSION['onpage'] == 'sendrequest'){?> class="active" <?php } ?> ><a href="sendrequest.php">Send Request</a></li>
+            <li <?php if($_SESSION['onpage'] == 'acceptrequest'){?> class="active" <?php } ?> ><a href="acceptrequest">Accept Request</a></li>
+          </ul>
+          <ul id="admin" class="nav nav-sidebar" >
+            <li <?php if($_SESSION['onpage'] == 'home'){?> class="active" <?php } ?> ><a href="home.php">Home</a></li>
+            <li <?php if($_SESSION['onpage'] == 'deleteuser'){?> class="active" <?php } ?> ><a href="deleteuser.php">Delete User</a></li>
+            <li <?php if($_SESSION['onpage'] == 'authenticateuser'){?> class="active" <?php } ?> ><a href="authenticateuser.php">Authenticate User</a></li>
           </ul>
     </div>
   
