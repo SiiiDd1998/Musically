@@ -49,7 +49,7 @@ session_start();
 
 			<div class="col-md-4 col-sm-4 col-xs-12">
                 <div id="add">  
-                    <form id="upload" action="upload.php" method="post" enctype="multipart/form-data">
+                    <form id="upload" action="" method="post" enctype="multipart/form-data">
                         
                         <div class="form-group">
                             <label for="name" class="cols-sm-2 control-label">Song Name</label>
@@ -71,10 +71,9 @@ session_start();
                                 </div>
                             </div>
                         </div>
-
-                        </div>
+                        <button type="submit" class="btn btn-success btn-block" name="add_btn" id="add_btn" >Add Music</button>
                     </form>
-                    <button type="submit" name="add_btn" id="add_btn" >Add Music</button>
+                    
                 </div>
 
             </div>
@@ -103,14 +102,40 @@ if(isset($_POST['add_btn']))
  $file_loc = $_FILES['file']['tmp_name'];
  $file_size = $_FILES['file']['size'];
  $file_type = $_FILES['file']['type'];
- $name = $_SESSION['userid'];
- $ownerid = 
+ $name = $_POST['name'];
+ $ownerid =  $_SESSION['userid'];
  $folder="uploads/";
- 
+ /*
+
+*******************IMP*******************IMP**********************
+
+
+ Your code correct for your work just check your upload_max_filesize on your php.ini default upload size limit 2mb chage it.
+
+
+
+
+
+ */
  move_uploaded_file($file_loc,$folder.$file);
  $mysqli = mysqli_connect("localhost","root","","musicallydb");
 
- $sql="INSERT INTO musics(file,filetype,filesize) VALUES('$file','$file_type','$file_size')";
- mysql_query($sql); 
+ $sql="INSERT INTO musics(file,filetype,filesize,name,owner_id) VALUES('$file','$file_type','$file_size','$name','$ownerid')";
+ $result = mysqli_query($mysqli,$sql);
+  if ( false===$result ) {
+    debug_to_console( mysqli_error($mysqli));
+  }
+  else {
+    debug_to_console('done.');
+  }
+
+  debug_to_console("Executed..");
 }
+function debug_to_console( $data ) {
+    $output = $data;
+    if ( is_array( $output ) )
+        $output = implode( ',', $output);
+  
+    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+  }
 ?>
