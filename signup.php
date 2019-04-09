@@ -18,7 +18,7 @@ $_SESSION['onpage'] = 'home';
     <script src="js/jquery-3.3.1.min.js"></script>
     
 
-    <title>IPL</title>
+    <title>Musically</title>
     <link rel="icon" href="css/images/ipl-logo1.jpg">
 </head>
 <body>
@@ -31,7 +31,7 @@ $_SESSION['onpage'] = 'home';
           <div class="container">
       <div class="row main">
         <div class="main-login main-center">
-        <h5>Sign up once and update scorecard</h5>
+        <h5>Sign up on Musically</h5>
           <form  method="post" action="home.php">
             
             <div class="form-group">
@@ -70,6 +70,19 @@ $_SESSION['onpage'] = 'home';
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                   <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="User Type" class="cols-sm-2 control-label">User Type</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <select class="form-control" id="usertype">
+                    <option>Admin</option>
+                    <option>User</option>
+                  </select>
                 </div>
               </div>
             </div>

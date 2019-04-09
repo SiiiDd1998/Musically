@@ -28,7 +28,7 @@ session_start();
     <link rel="stylesheet" href="css/login.css">
 
 	<link rel="icon" href="css/images/ipl-logo1.jpg">
-	<title>IPL</title>
+	<title>Musically</title>
 </head>
 
 <body>
