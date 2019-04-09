@@ -29,7 +29,29 @@ session_start();
 
 	<!-- <link rel="icon" href="css/images/ipl-logo1.jpg"> -->
 	<title>Musically</title>
+    <?php 
+    $mysqli=mysqli_connect("localhost","root","","musicallydb");
+    
+    if(isset($_SESSION['userid'])){
+        
+        $sql="select * from musics where owner_id='".$_SESSION['userid']."' ";
+        $values=array();
+
+        $result=mysqli_query($mysqli,$sql);
+
+        $num=mysqli_num_rows($result);
+
+        if($num>0){
+            while($row=mysqli_fetch_array($result,MYSQLI_NUM)){
+                $values[]=$row;
+            }
+        }
+        
+    }
+    
+?>
 </head>
+
 
 <body>
 
@@ -38,15 +60,32 @@ session_start();
     <?php include 'mynavigation.php';?>
     		<div id='content' class="col-md-10 main">
 
-			<div class="col-md-4 col-sm-4 col-xs-12">
-			</div>
 
-			<div class="col-md-4 col-sm-4 col-xs-12">
-				
-				
-			</div>
 
-			<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="col-md-10 main">
+
+				<table class="table table-bordered table-hover">
+
+					<tr>
+						<thead>
+							<th>Music id</th>
+							<th>Song Name</th>
+							<th>Owner id</th>
+							<th>File</th>
+							<th>Play</th>
+						</thead>
+					</tr>
+                    <?php for($i=0;$i<$num;$i++){ ?>
+					<tr>
+						<td><?= $values[$i][0] ?></td>
+						<td><?= $values[$i][1] ?></td>
+						<td><?= $values[$i][2] ?></td>
+						<td><?= $values[$i][3] ?></td>
+						<td>Play</td>
+					</tr>
+                    <?php }?>
+				</table>
+
 			</div>
 
 		</div>
