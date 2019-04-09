@@ -9,6 +9,11 @@ session_start();
     $(document).ready(function() {
         $('.file-upload').file_upload();
     });
+//http://www.codingcage.com/2014/12/file-upload-and-view-with-php-and-mysql.html for upload code
+    function addMusic(){
+      var x = document.getElementById("file").value;//x stores path
+      console.log(x);
+    }
 </script>
 <!-- <p>Click the button to create a File Upload Button.</p>
 
@@ -48,12 +53,12 @@ session_start();
               <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                       <label class="file-upload btn btn-primary">
-                          Browse for file ... <input type="file" />
+                          Browse for file ... <input type="file" id="file" />
                       </label>
                   </div>
               </div>
           </form>
-          <button id = "add_btn">Add Music</button>
+          <button id = "add_btn" onClick="addMusic()">Add Music</button>
         </div>
 			</div>
 
